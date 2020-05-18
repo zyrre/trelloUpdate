@@ -14,6 +14,8 @@ cur = db.cursor()
 cur.execute("DELETE FROM api_task;")
 cur.close()
 
+cardExists = False
+
 cursor = db.cursor()
 query = "INSERT INTO api_task(title, description, done, \"dueDate\", list) VALUES "
 
@@ -24,13 +26,16 @@ for board in allBoards:
     if board.name == 'Week':
         weekBoard = board
 
-lists = weekBoard.list_lists()
-for list in lists:
-    for card in list.list_cards():
-        query += "('%s','%s','%s','%s','%s'), " % \
-                 (card.name, card.description, str(card.badges['dueComplete']), str(card.due_date), list.name)
-query = query[:-2]
-query += ";"
-cursor.execute(query)
+if weekBoard != '':
+    lists = weekBoard.list_lists()
+    for list in lists:
+        for card in list.list_cards():
+            cardExists = True
+            query += "('%s','%s','%s','%s','%s'), " % \
+                     (card.name, card.description, str(card.badges['dueComplete']), str(card.due_date), list.name)
+    query = query[:-2]
+    query += ";"
+    if cardExists:
+        cursor.execute(query)
 cursor.close()
 db.close()
