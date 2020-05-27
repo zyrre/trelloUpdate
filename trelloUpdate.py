@@ -7,7 +7,7 @@ trelloClient = TrelloClient(
     api_secret=config.api_secret
 )
 
-db = psycopg2.connect(host="localhost", database="trelloData", user="pi", password="herman")
+db = psycopg2.connect(host="localhost", database="trelloData", user=config.db_user, password=config.db_password)
 db.set_session(autocommit=True)
 # clear db of tasks
 cur = db.cursor()
