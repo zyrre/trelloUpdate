@@ -17,7 +17,7 @@ cur.close()
 cardExists = False
 
 cursor = db.cursor()
-query = "INSERT INTO api_task(title, description, done, \"dueDate\", list) VALUES "
+query = "INSERT INTO api_task(title, description, done, due_date, list) VALUES "
 
 # fetch from trelloAPI
 allBoards = trelloClient.list_boards()
